@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nepenthe Cafe | نپنتی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sage-deep:   #62705A;
+    --sage-mute:   #8FA084;
+    --ink:         #1B1F17;
+    --ink-soft:    #262B22;
+    --ivory:       #F4F1E8;
+    --gold:        #BFA76F;
+    --line:        rgba(191,167,111,.35);
+    --serif: 'Fraunces', serif;
+    --fa: 'Vazirmatn', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--fa);
+    background:var(--ivory);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  .eyebrow{
+    font-family:var(--fa);
+    font-size:.78rem;
+    letter-spacing:.28em;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:.9rem;
+    display:block;
+  }
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 6vw;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:1.1rem 6vw;
+    background:rgba(27,31,23,0);
+    transition:background .5s ease, padding .4s ease, box-shadow .4s ease;
+  }
+  nav.scrolled{
+    background:rgba(27,31,23,.92);
+    backdrop-filter:blur(6px);
+    padding:.7rem 6vw;
+    box-shadow:0 8px 24px rgba(0,0,0,.15);
+  }
+  .logotype{
+    font-family:var(--serif);
+    font-size:1.25rem;
+    letter-spacing:.22em;
+    color:var(--ivory);
+    font-weight:500;
+  }
+  .nav-links{
+    display:flex;
+    gap:2.2rem;
+    font-size:.85rem;
+    color:var(--ivory);
+    opacity:.85;
+  }
+  .nav-links a{position:relative;padding-bottom:4px;}
+  .nav-links a::after{
+    content:'';position:absolute;bottom:0;right:0;left:0;height:1px;
+    background:var(--gold);transform:scaleX(0);transform-origin:right;
+    transition:transform .35s ease;
+  }
+  .nav-links a:hover::after{transform:scaleX(1);}
+  @media(max-width:640px){.nav-links{display:none;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    background:radial-gradient(120% 100% at 50% 0%, var(--ink-soft) 0%, var(--ink) 60%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding:0 6vw;
+    overflow:hidden;
+  }
+  .tendril{
+    position:absolute;
+    color:var(--sage-mute);
+    opacity:.28;
+    width:min(60vw,420px);
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+  }
+  .tendril path{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.4;
+    stroke-linecap:round;
+  }
+  .hero-content{position:relative;z-index:2;}
+  .hero .eyebrow{color:var(--sage-mute);text-align:center;}
+  .hero h1{
+    font-family:var(--serif);
+    color:var(--ivory);
+    font-weight:400;
+    font-size:clamp(2.6rem,8vw,5rem);
+    letter-spacing:.14em;
+    line-height:1;
+  }
+  .hero .tagline{
+    margin-top:1.6rem;
+    font-size:1.05rem;
+    color:rgba(244,241,232,.75);
+    max-width:34ch;
+    margin-inline:auto;
+    line-height:2;
+    font-weight:300;
+  }
+  .divider{
+    width:1px;height:46px;
+    background:linear-gradient(var(--gold),transparent);
+    margin:2.6rem auto 0;
+  }
+  .scroll-hint{
+    position:absolute;
+    bottom:2.4rem;left:50%;transform:translateX(-50%);
+    font-size:.72rem;letter-spacing:.2em;
+    color:rgba(244,241,232,.5);
+    display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  }
+  .scroll-hint .stem{width:1px;height:26px;background:rgba(191,167,111,.6);animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:7.5rem 0;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:3.5rem;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-size:clamp(1.9rem,3.6vw,2.7rem);
+    font-weight:500;
+    line-height:1.3;
+  }
+  .fade{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .fade.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- IMAGE PLACEHOLDER ---------- */
+  .img-box{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(155deg,var(--sage-deep),var(--sage-mute));
+  }
+  .img-box .fallback{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:.7rem;color:rgba(244,241,232,.85);
+    font-size:.8rem;letter-spacing:.05em;text-align:center;padding:1rem;
+  }
+  .img-box img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;z-index:1;
+  }
+  .img-box svg.icon{width:34px;height:34px;opacity:.8;}
+
+  /* ---------- ABOUT ---------- */
+  .about{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:3rem;
+    align-items:center;
+  }
+  .about .img-box{aspect-ratio:4/5;border-radius:2px;}
+  .about p{
+    font-weight:300;
+    line-height:2.1;
+    font-size:1rem;
+    color:#3b4335;
+    margin-bottom:1.4rem;
+  }
+  @media(min-width:860px){
+    .about{grid-template-columns:1fr 1.1fr;gap:5rem;}
+    .about .img-box{aspect-ratio:auto;height:520px;}
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1rem;
+  }
+  .gallery-grid .img-box{aspect-ratio:1/1;}
+  .gallery-grid .g-tall{aspect-ratio:3/4;}
+  .gallery-grid .g-wide{aspect-ratio:4/3;grid-column:span 2;}
+  @media(min-width:760px){
+    .gallery-grid{grid-template-columns:repeat(4,1fr);}
+    .gallery-grid .g1{grid-column:span 2;grid-row:span 2;}
+    .gallery-grid .g1{aspect-ratio:1/1;}
+    .gallery-grid .g-wide{grid-column:span 2;}
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-wrap{
+    background:var(--ink);
+    border-radius:4px;
+    padding:3.4rem 6vw;
+    display:grid;
+    gap:2.4rem;
+    color:var(--ivory);
+  }
+  .contact-wrap .section-head h2{color:var(--ivory);}
+  .contact-grid{
+    display:grid;
+    gap:2.2rem;
+    grid-template-columns:1fr;
+  }
+  @media(min-width:760px){.contact-grid{grid-template-columns:repeat(3,1fr);}}
+  .contact-grid--split{grid-template-columns:1fr !important;}
+  @media(min-width:760px){.contact-grid--split{grid-template-columns:1fr 1.3fr !important;align-items:center;}}
+  .map-box{
+    width:100%;height:280px;
+    border-radius:3px;overflow:hidden;
+    border:1px solid var(--line);
+  }
+  @media(min-width:760px){.map-box{height:320px;}}
+  .contact-item .label{
+    font-size:.72rem;letter-spacing:.2em;color:var(--gold);margin-bottom:.7rem;display:block;
+  }
+  .contact-item p{font-weight:300;line-height:1.9;color:rgba(244,241,232,.85);}
+
+  /* ---------- SOCIAL ---------- */
+  .social{
+    text-align:center;
+  }
+  .social .eyebrow{text-align:center;}
+  .social-links{
+    display:flex;justify-content:center;gap:1.4rem;margin-top:1.6rem;flex-wrap:wrap;
+  }
+  .social-links a{
+    width:52px;height:52px;border:1px solid var(--line);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .3s ease, transform .3s ease;
+    color:var(--sage-deep);
+  }
+  .social-links a:hover{background:var(--sage-deep);color:var(--ivory);transform:translateY(-3px);}
+  .social-links svg{width:20px;height:20px;}
+
+  /* ---------- DIVIDER GLYPH ---------- */
+  .glyph-divider{
+    display:flex;justify-content:center;margin:0 0 -1px;
+    color:var(--sage-mute);opacity:.6;
+  }
+  .glyph-divider svg{width:70px;height:44px;}
+
+  footer{
+    text-align:center;
+    padding:2.6rem 6vw;
+    background:var(--ink);
+    color:rgba(244,241,232,.5);
+    font-size:.78rem;
+    letter-spacing:.05em;
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logotype">NEPENTHE</div>
+  <div class="nav-links">
+    <a href="#about">درباره ما</a>
+    <a href="#gallery">گالری</a>
+    <a href="#contact">تماس</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <svg class="tendril" viewBox="0 0 200 320" aria-hidden="true">
+    <path d="M100 8 C 58 55, 142 92, 88 142 C 38 188, 132 212, 108 262"/>
+    <path d="M108 262 C 92 274, 92 302, 114 308 C 136 302, 136 272, 116 264 Z"/>
+    <path d="M88 142 C 66 130, 50 146, 62 162 C 74 176, 94 168, 90 148"/>
+  </svg>
+  <div class="hero-content">
+    <span class="eyebrow">CAFE · نپنتی</span>
+    <h1>NEPENTHE</h1>
+    <div class="divider"></div>
+    <p class="tagline">دعوتی به آرامش؛ جایی برای فرو گذاشتنِ دنیای بیرون، در سایه‌ی سبزِ سکوت.</p>
+  </div>
+  <div class="scroll-hint">
+    <span>پیمایش</span>
+    <span class="stem"></span>
+  </div>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="container">
+  <div class="about fade">
+    <div class="img-box">
+      <div class="fallback">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5-4 4-3-3-6 6"/></svg>
+        <span>images/about.jpg<br>را جایگزین کنید</span>
+      </div>
+      <img src="images/about.jpg" alt="فضای کافه نپنتی" onerror="this.style.display='none'">
+    </div>
+    <div>
+      <span class="eyebrow">درباره ما</span>
+      <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:500;margin-bottom:1.6rem;line-height:1.35;">نپنتی فقط یک کافه نیست</h2>
+      <p>نپنتی واژه‌ای از یونان باستان است؛ به معنای رهایی از اندوه، جایی که نگرانی‌ها برای لحظاتی رنگ می‌بازند.</p>
+      <p>اینجا مکثی کوتاه میان روزهای پرشتاب زندگی است؛ جایی برای قهوه‌ای که با حوصله نوشیده می‌شود، گفتگوهایی که ادامه پیدا می‌کنند و لحظه‌هایی که ارزش ماندن دارند.</p>
+      <p>در نپنتی، هر فنجان قهوه بهانه‌ای است برای آرام‌تر گذشتن زمان و ساختن خاطراتی که تا مدت‌ها در ذهن می‌مانند.</p>
+    </div>
+  </div>
+</section>
+
+<div class="glyph-divider">
+  <svg viewBox="0 0 70 44"><path d="M5 22 C 20 5, 30 40, 35 22 C 40 5, 50 40, 65 22" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+</div>
+
+<!-- ================= GALLERY ================= -->
+<section id="gallery" class="container">
+  <div class="section-head fade">
+    <span class="eyebrow">گالری</span>
+    <h2>لحظه‌هایی از نپنتی</h2>
+  </div>
+  <div class="gallery-grid fade">
+    <div class="img-box g1">
+      <div class="fallback"><span>images/gallery-1.jpg</span></div>
+      <img src="images/gallery-1.jpg" alt="گالری نپنتی ۱" onerror="this.style.display='none'">
+    </div>
+    <div class="img-box g-tall">
+      <div class="fallback"><span>images/gallery-2.jpg</span></div>
+      <img src="images/gallery-2.jpg" alt="گالری نپنتی ۲" onerror="this.style.display='none'">
+    </div>
+    <div class="img-box">
+      <div class="fallback"><span>images/gallery-3.jpg</span></div>
+      <img src="images/gallery-3.jpg" alt="گالری نپنتی ۳" onerror="this.style.display='none'">
+    </div>
+    <div class="img-box g-wide">
+      <div class="fallback"><span>images/gallery-4.jpg</span></div>
+      <img src="images/gallery-4.jpg" alt="گالری نپنتی ۴" onerror="this.style.display='none'">
+    </div>
+    <div class="img-box">
+      <div class="fallback"><span>images/gallery-5.jpg</span></div>
+      <img src="images/gallery-5.jpg" alt="گالری نپنتی ۵" onerror="this.style.display='none'">
+    </div>
+  </div>
+</section>
+
+<div class="glyph-divider">
+  <svg viewBox="0 0 70 44"><path d="M5 22 C 20 5, 30 40, 35 22 C 40 5, 50 40, 65 22" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="container">
+  <div class="contact-wrap fade">
+    <div class="section-head" style="margin-bottom:0;">
+      <span class="eyebrow">ارتباط با ما</span>
+      <h2>به ما سر بزنید</h2>
+    </div>
+    <div class="contact-grid contact-grid--split">
+      <div class="contact-item">
+        <span class="label">آدرس</span>
+        <p>تهران، خیابان پیروزی، نبرد شمالی، ۲۰ متری صاحب‌الزمان<br>کافه نپنتی</p>
+        <span class="label" style="margin-top:1.4rem;">ساعات کاری</span>
+        <p>هر روز — ۸ صبح تا ۱۱ شب</p>
+      </div>
+      <div class="map-box">
+        <iframe
+          src="https://www.google.com/maps?q=Nepenthe+Cafe,+Piroozi+St,+Tehran&output=embed"
+          width="100%" height="100%" style="border:0;filter:grayscale(.15) contrast(1.05);"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOCIAL ================= -->
+<section class="container social fade">
+  <span class="eyebrow">ما را دنبال کنید</span>
+  <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:500;">نپنتی در فضای مجازی</h2>
+  <div class="social-links">
+    <a href="https://instagram.com/nepenthe_cafe_" target="_blank" rel="noopener" aria-label="اینستاگرام">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="glyph-divider" style="margin-bottom:1.2rem;">
+    <svg viewBox="0 0 70 44"><path d="M5 22 C 20 5, 30 40, 35 22 C 40 5, 50 40, 65 22" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+  </div>
+  © 2026 NEPENTHE — تمامی حقوق محفوظ است
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
